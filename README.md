@@ -43,30 +43,28 @@
 | Column         | Type       | Options                        |
 | -------------- | ---------- | ------------------------------ |
 | postal_code    | string     | null: false                    |
-| prefectures    | string     | null: false, foreign_key: true |
+| prefectures    | references | null: false, foreign_key: true |
 | city           | string     | null: false                    |
 | adress1        | string     | null: false                    |
 | adress2        | string     |                                |
 | phone_number   | string     | null: false                    |
-| purchased_item | string     | null: false, foreign_key: true |
+| purchased_item | references | null: false, foreign_key: true |
 
 ### Association
 
-- has_one :purchased_item 
-- belongs_to :item
+- belongs_to :purchased_item 
 
 ## purchased_items テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| user               | integer    | null: false, foreign_key: true |
-| item               | integer    | null: false, foreign_key: true |
-| delivery_addresses | integer    | null: false, foreign_key: true |
+| user               | references | null: false, foreign_key: true |
+| item               | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
 - belongs_to :item
-- belongs_to :delivery_addresses 
+- has_one :delivery_address
 
 
