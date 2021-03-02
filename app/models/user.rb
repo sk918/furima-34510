@@ -8,6 +8,7 @@ class User < ApplicationRecord
   ZENKAKU_NAME_KANA = /\A[ァ-ヶー－]+\z/
 
   validates :nickname, presence: true
+  validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i }
   validates :family_name, format: { with: ZENKAKU_NAME }, allow_blank: true
   validates :family_name, presence: true
   validates :first_name, format: { with: ZENKAKU_NAME }, allow_blank: true
