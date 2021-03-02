@@ -8,10 +8,14 @@ class User < ApplicationRecord
   ZENKAKU_NAME_KANA = /\A[ァ-ヶー－]+\z/
 
   validates :nickname, presence: true
-  validates :family_name, presence: true, format: { with: ZENKAKU_NAME }
-  validates :first_name, presence: true, format: { with: ZENKAKU_NAME }
-  validates :family_name_kana, presence: true, format: { with: ZENKAKU_NAME_KANA }
-  validates :first_name_kana, presence: true, format: { with: ZENKAKU_NAME_KANA }
+  validates :family_name, format: { with: ZENKAKU_NAME }, allow_blank: true
+  validates :family_name, presence: true
+  validates :first_name, format: { with: ZENKAKU_NAME }, allow_blank: true
+  validates :first_name, presence: true
+  validates :family_name_kana, format: { with: ZENKAKU_NAME_KANA }, allow_blank: true
+  validates :family_name_kana, presence: true
+  validates :first_name_kana, format: { with: ZENKAKU_NAME_KANA }, allow_blank: true
+  validates :first_name_kana, presence: true
   validates :birth_date, presence: true
 
 end
