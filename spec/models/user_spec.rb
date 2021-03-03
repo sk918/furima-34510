@@ -106,42 +106,60 @@ RSpec.describe User, type: :model do
       it 'emailには@がない場合登録できない' do
         @user.email = "kkkgmail.com"
         @user.valid?
-        expect(@user.errors_full_messages).to include("Email is invalid")
+        expect(@user.errors.full_messages).to include("Email is invalid")
       end
 
-      it 'passwordが半角英数字混合でも5文字以下であれば登録できないこと' do
+      it 'passwordが半角英数字混合でも5文字以下であれば登録できない' do
         @user.password = 'aiu12'
         @user.password_confirmation = 'aiu12'
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
 
-      it 'passwordとpassword_confirmationが半角英数字混合でも不一致では登録できないこと' do
+      it 'passwordが英語のみでは登録できない' do
+        @user.password = "zaqwsx"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+
+      it 'passwordが数字のみでは登録できないこと' do
+        @user.password = "987654"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+
+      it 'passwordが全角では登録できないこと' do
+        @user.password = "1k４sk３s"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+
+      it 'passwordとpassword_confirmationが半角英数字混合でも不一致では登録できない' do
         @user.password = 'aiu123'
         @user.password_confirmation = 'aiu1234'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
 
-      it 'family_nameが半角であれば登録できないこと' do
+      it 'family_nameが半角であれば登録できない' do
         @user.family_name = 'aｱｱ'
         @user.valid?
         expect(@user.errors.full_messages).to include('Family name is invalid')
       end
 
-      it 'first_nameが半角であれば登録できないこと' do
+      it 'first_nameが半角であれば登録できない' do
         @user.first_name = 'aｱｱ'
         @user.valid?
         expect(@user.errors.full_messages).to include('First name is invalid')
       end
 
-      it 'family_name_kanaが半角であれば登録できないこと' do
+      it 'family_name_kanaが半角であれば登録できない' do
         @user.family_name_kana = 'aｱｱ'
         @user.valid?
         expect(@user.errors.full_messages).to include('Family name kana is invalid')
       end
 
-      it 'first_name_kanaが半角であれば登録できないこと' do
+      it 'first_name_kanaが半角であれば登録できない' do
         @user.first_name_kana = 'aｱｱ'
         @user.valid?
         expect(@user.errors.full_messages).to include('First name kana is invalid')
@@ -149,4 +167,3 @@ RSpec.describe User, type: :model do
     end
   end
 end
-
