@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  #has_many :items
-  #has_many :purchased_items
+  has_many :items
+  has_many :purchased_items
 
   ZENKAKU_NAME = /\A[ぁ-んァ-ン一-龥々]+\z/
   ZENKAKU_NAME_KANA = /\A[ァ-ヶー－]+\z/
