@@ -11,7 +11,7 @@ class User < ApplicationRecord
   ZENKAKU_NAME_KANA = /\A[ァ-ヶー－]+\z/
 
   validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i }
-  
+
   with_options presence: true do
     validates :nickname
     validates :family_name
@@ -31,5 +31,4 @@ class User < ApplicationRecord
     validates :first_name_kana
   end
 
-  
 end
