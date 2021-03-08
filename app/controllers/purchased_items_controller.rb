@@ -1,5 +1,6 @@
 class PurchasedItemsController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!, only: [:index, :create]
+  before_action :move_to_index, only: [:index, :create]
 
   def index
     @item = Item.find(params[:item_id])
@@ -12,7 +13,7 @@ class PurchasedItemsController < ApplicationController
     if @purchased_item.valid?
       pay_item
       @purchased_item.save
-      return redirect_to root_path
+      return redirect_to items_path
     else
       render "index"
     end
@@ -25,12 +26,19 @@ class PurchasedItemsController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = "sk_test_00921be9afd09e3b0c4a980d" # 自身のPAY.JPテスト秘密鍵を記述しましょう
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
       Payjp::Charge.create(
         amount: @item.price,  # 商品の値段
-        card: purchased_item_params[:token],    # カードトークン
-        currency: 'jpy'                 # 通貨の種類（日本円）
+        card: purchased_item_params[:token],
+        currency: 'jpy'
       )
+    end
+
+    def move_to_index
+      @item = Item.find(params[:item_id])
+      if @item.user_id == current_user.id || @item.purchased_item.present?
+        redirect_to items_path 
+      end
     end
 
 end
