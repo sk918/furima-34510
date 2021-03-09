@@ -13,6 +13,8 @@ class PayForm
     validates :street_address
     validates :phone_number
     validates :token
+    validates :user_id
+    validates :item_id
   end
 
   def save
